@@ -1,0 +1,46 @@
+/* 1. Contenedor de los filtros */
+.filter-container {
+    max-width: 950px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+}
+
+/* 2. Estilo base para todos los botones de filtro */
+button.btn-sm {
+    min-width: 120px;
+    border-radius: 50px;
+    font-weight: 600;
+    border-width: 2px;
+    transition: all 0.25s ease-in-out;
+    text-transform: capitalize; 
+}
+
+/* 3. Estado: Botón NO seleccionado (Blanco con letras azules) */
+button.btn-outline-primary {
+    background-color: white !important;
+    color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+/* 4. Estado: Botón SELECCIONADO (Azul con letras blancas) */
+button.btn-primary {
+    background-color: #0d6efd !important;
+    color: white !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4) !important;
+}
+
+/* 5. Efectos visuales de interacción */
+button.btn-sm:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}

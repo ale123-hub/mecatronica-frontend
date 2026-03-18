@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
   styleUrl: './admin-panel.component.css'
 })
 export class AdminPanelComponent implements OnInit {
-  
-  semesters: any[] = []; 
+
+  semesters: any[] = [];
   shifts: any[] = []; // Los turnos que traeremos de la DB
 
   projectForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl(''),
-    semester_id: new FormControl('', [Validators.required]), 
+    semester_id: new FormControl('', [Validators.required]),
     shift_id: new FormControl('', [Validators.required]) // Lo dejamos vacío para que obligue a elegir
   });
 
@@ -40,6 +40,11 @@ export class AdminPanelComponent implements OnInit {
       next: (data) => this.shifts = data,
       error: (err) => console.error('Error cargando turnos', err)
     });
+  }
+
+  logout() {
+    localStorage.removeItem('admin_token'); // Borramos la llave
+    this.router.navigate(['/login']);       // Mandamos al login
   }
 
   onFileSelected(event: any) {

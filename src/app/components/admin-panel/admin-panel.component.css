@@ -1,8 +1,47 @@
-.transition-card {
-    transition: transform 0.3s ease, shadow 0.3s ease;
+/* Eliminar el azul genérico de arriba y dar estilo industrial */
+.letter-spacing-1 { letter-spacing: 1.5px; }
+
+.card {
+  border-radius: 15px;
 }
 
-.transition-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+.card-header {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #007bff;
+  background-color: #f8f9ff;
+}
+
+/* Efecto de borde punteado para la carga de imágenes */
+.border-dashed {
+  border: 2px dashed #dee2e6;
+  transition: all 0.3s;
+}
+
+.border-dashed:hover {
+  border-color: #007bff;
+  background-color: #eef6ff !important;
+}
+
+.cursor-pointer { cursor: pointer; }
+
+/* Efecto de elevación en el botón */
+.hover-up {
+  transition: transform 0.2s;
+}
+.hover-up:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background-color: #0056b3;
+}
+
+/* Animación para la vista previa */
+.animate__zoomIn {
+  animation: zoomIn 0.3s;
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }

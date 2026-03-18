@@ -3,27 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ProjectService {
-    // La URL de tu API de Laravel (Backend)
-    private apiUrl = 'http://127.0.0.1:8000/api/projects';
+  private apiUrl = 'http://127.0.0.1:8000/api'; // URL base para no repetir
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    getProjects(): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl);
-    }
+  // Obtener proyectos (Público)
+  getProjects(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/projects`);
+  }
 
-    createProject(formData: FormData): Observable<any> {
-        return this.http.post(this.apiUrl, formData);
-    }
-  
-    getSemesters(): Observable<any[]> {
-        return this.http.get<any[]>('http://127.0.0.1:8000/api/semesters');
-    }
+  // Crear proyecto (Privado - El Interceptor pondrá el Token)
+  createProject(formData: FormData): Observable<any> {
+    // IMPORTANTE: No añadimos Headers aquí. 
+    // El navegador configurará el 'multipart/form-data' automáticamente.
+    return this.http.post(`${this.apiUrl}/projects`, formData);
+  }
 
-    getShifts(): Observable<any[]> {
-    return this.http.get<any[]>('http://127.0.0.1:8000/api/shifts');
-    }
+  // Auxiliares para el formulario
+  getSemesters(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/semesters`);
+  }
+
+  getShifts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/shifts`);
+  }
 }

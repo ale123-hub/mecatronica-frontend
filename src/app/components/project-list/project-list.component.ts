@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ProjectListComponent implements OnInit {
 
-  allProjects: any[] = [];      // Copia de seguridad de todos los proyectos
-  projects: any[] = [];         // Los proyectos que se muestran (filtrados)
-  semesters: any[] = [];        // Para los botones de filtro
-  selectedSemester: number | null = null; // Para saber qué filtro está activo
+  allProjects: any[] = [];     
+  projects: any[] = [];         
+  semesters: any[] = [];        
+  selectedSemester: number | null = null; 
 
   constructor(private projectService: ProjectService) { }
 
@@ -22,13 +22,12 @@ export class ProjectListComponent implements OnInit {
     // 1. Cargar Proyectos
     this.projectService.getProjects().subscribe(data => {
       this.allProjects = data;
-      this.projects = data; // Al inicio mostramos todos
+      this.projects = data; 
     });
 
     // 2. Cargar Semestres para los botones
     this.projectService.getSemesters().subscribe(data => {
       this.semesters = data.sort((a: any, b: any) => {
-        // Esto ordena comparando el texto del nombre (ej: "1er" va antes que "2do")
         return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
       });
     });
@@ -39,7 +38,7 @@ export class ProjectListComponent implements OnInit {
     this.selectedSemester = semesterId;
 
     if (semesterId === null) {
-      this.projects = this.allProjects; // Mostrar todos
+      this.projects = this.allProjects; 
     } else {
       this.projects = this.allProjects.filter(p => p.semester_id === semesterId);
     }

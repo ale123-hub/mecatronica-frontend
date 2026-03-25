@@ -16,7 +16,7 @@ button.btn-sm {
     font-weight: 600;
     border-width: 2px;
     transition: all 0.25s ease-in-out;
-    text-transform: capitalize; 
+    text-transform: capitalize;
 }
 
 /* 3. Estado: Botón NO seleccionado (Blanco con letras azules) */
@@ -43,4 +43,30 @@ button.btn-sm:hover {
 button:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.transition-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transition-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Para que la descripción no sea eterna en la tarjeta */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
 }

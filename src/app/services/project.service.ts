@@ -43,9 +43,9 @@ export class ProjectService {
 
   // Actualizar proyecto (usamos POST con _method=PUT por limitaciones de FormData en PHP)
   updateProject(id: number, formData: FormData): Observable<any> {
-    formData.append('_method', 'PUT');
-    return this.http.post(`${this.apiUrl}/projects/${id}`, formData);
-  }
+  formData.append('_method', 'PUT'); 
+  return this.http.post(`${this.apiUrl}/projects/${id}`, formData);
+}
 
   // Auxiliares para el formulario
   getSemesters(): Observable<any[]> {

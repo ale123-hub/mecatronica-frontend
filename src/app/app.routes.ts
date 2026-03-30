@@ -1,23 +1,23 @@
 import { Routes } from '@angular/router';
+import { InstitucionalComponent } from './components/institucional/institucional.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProjectListComponent } from './components/project-list/project-list.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { authGuard } from './auth.guard'; // <--- Importa tu guard aquí
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import { authGuard } from './auth.guard'; 
 
 export const routes: Routes = [
-  // 1. RUTA PÚBLICA: Cualquier persona entra a la raíz y ve los proyectos
-  { path: '', component: ProjectListComponent },
+  // 1. Lo primero que ve la gente al entrar a la web
+  { path: '', component: InstitucionalComponent },
 
-  // 2. LOGIN: Para que el administrador se identifique
+  // 2. La galería de proyectos (a donde lleva el botón rojo)
+  { path: 'proyectos', component: ProjectListComponent },
+
+  // 3. Acceso para el administrador
   { path: 'login', component: LoginComponent },
 
-  // 3. RUTA PROTEGIDA: Solo entra el admin si el authGuard dice que hay token
-  { 
-    path: 'admin', 
-    component: AdminPanelComponent, 
-    canActivate: [authGuard] 
-  },
+  // 4. Panel de control (Solo con Token)
+  { path: 'admin', component: AdminPanelComponent, canActivate: [authGuard] },
 
-  // 4. COMODÍN: Si alguien escribe cualquier cosa mal, lo envia al inicio
+  // 5. Si alguien se pierde, lo regresamos a la Misión/Visión
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

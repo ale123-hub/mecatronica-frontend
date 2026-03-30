@@ -1,4 +1,28 @@
-/* 1. Contenedor de los filtros */
+/* 1. Contenedores Principales */
+.page-container {
+    position: relative;
+    min-height: 100vh;
+    /* overflow: hidden;  <-- Si ves que te corta el scroll de la página, comenta esta línea */
+}
+
+/* 2. Logo de Fondo Institucional (Watermark) */
+.institucional-bg {
+    position: fixed; /* Cambiado a fixed para que se mantenga centrado aunque hagas scroll */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%; 
+    height: 70%;
+    background-image: url('/img/logo-uce.png'); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.06; /* Muy sutil para que las letras se lean bien */
+    z-index: -1;
+    pointer-events: none; 
+}
+
+/* 3. Contenedor de los filtros */
 .filter-container {
     max-width: 950px;
     margin: 0 auto;
@@ -9,8 +33,8 @@
     padding: 20px;
 }
 
-/* 2. Estilo base para todos los botones de filtro */
-button.btn-sm {
+/* 4. Botones de filtro */
+button.btn-pill { /* Cambié btn-sm por una clase más descriptiva si gustas usarla */
     min-width: 120px;
     border-radius: 50px;
     font-weight: 600;
@@ -19,14 +43,14 @@ button.btn-sm {
     text-transform: capitalize;
 }
 
-/* 3. Estado: Botón NO seleccionado (Blanco con letras azules) */
+/* Estado: NO seleccionado (Blanco/Azul) */
 button.btn-outline-primary {
     background-color: white !important;
     color: #0d6efd !important;
     border-color: #0d6efd !important;
 }
 
-/* 4. Estado: Botón SELECCIONADO (Azul con letras blancas) */
+/* Estado: SELECCIONADO (Azul/Blanco) */
 button.btn-primary {
     background-color: #0d6efd !important;
     color: white !important;
@@ -34,8 +58,7 @@ button.btn-primary {
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4) !important;
 }
 
-/* 5. Efectos visuales de interacción */
-button.btn-sm:hover {
+button:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
@@ -45,10 +68,7 @@ button:focus {
     box-shadow: none !important;
 }
 
-.transition-all {
-    transition: all 0.3s ease;
-}
-
+/* 5. Tarjetas de Proyectos */
 .transition-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -58,14 +78,15 @@ button:focus {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Para que la descripción no sea eterna en la tarjeta */
 .text-truncate-2 {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    line-clamp: 2;         
     overflow: hidden;
 }
 
+/* 6. Modales y Efectos */
 .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);

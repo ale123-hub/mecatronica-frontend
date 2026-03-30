@@ -1,0 +1,41 @@
+/* 1. Contenedor principal para permitir el posicionamiento del fondo */
+.page-wrapper {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px; 
+}
+
+/* 2. El logo de fondo (Marca de agua) */
+.bg-watermark {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; 
+    height: 70%;
+    background-image: url('/img/logo-uce.png'); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.05; 
+    z-index: -1;
+    pointer-events: none; 
+}
+
+/* 3. Estilo de las tarjetas (Misión, Visión, Objetivo) */
+.card {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(2px); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 4. Efecto de hover para el botón principal de Proyectos */
+.btn-lg {
+    transition: all 0.3s ease;
+}
+
+.btn-lg:hover {
+    transform: scale(1.05); 
+    background-color: #a31f1f !important; 
+    box-shadow: 0 10px 20px rgba(198, 40, 40, 0.3) !important; 
+}

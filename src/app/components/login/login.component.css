@@ -1,0 +1,10 @@
+.hover-link {
+    font-size: 0.9rem;
+    color: #6c757d; /* Gris secundario */
+    transition: color 0.2s ease-in-out;
+}
+
+.hover-link:hover {
+    color: #0d6efd !important; /* El azul que estás usando en el login */
+    text-decoration: underline !important;
+}

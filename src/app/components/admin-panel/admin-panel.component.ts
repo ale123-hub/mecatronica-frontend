@@ -38,30 +38,48 @@ export class AdminPanelComponent implements OnInit {
   constructor(private projectService: ProjectService, private router: Router) { }
 
   ngOnInit(): void {
+    const token = localStorage.getItem('admin_token');
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      return; 
+    }
+
     this.loadInitialData();
     this.loadProjects();
   }
 
   // --- CARGA DE DATOS ---
 
-  loadInitialData() {
+loadInitialData() {
     this.projectService.getSemesters().subscribe({
       next: (data) => this.semesters = data.sort((a, b) => a.id - b.id),
-      error: (err) => console.error('Error semestres', err)
+      error: (err) => this.handleServiceError('cargar semestres', err)
     });
 
     this.projectService.getShifts().subscribe({
       next: (data) => this.shifts = data.sort((a, b) => a.id - b.id),
-      error: (err) => console.error('Error turnos', err)
+      error: (err) => this.handleServiceError('cargar turnos', err)
     });
 
-    this.projectService.getTeachers().subscribe(data => this.teachers = data);
-    this.projectService.getStudents().subscribe(data => this.students = data);
+    this.projectService.getTeachers().subscribe({
+      next: (data) => this.teachers = data,
+      error: (err) => this.handleServiceError('cargar profesores', err)
+    });
+
+    this.projectService.getStudents().subscribe({
+      next: (data) => this.students = data,
+      error: (err) => this.handleServiceError('cargar estudiantes', err)
+    });
   }
 
   loadProjects() {
-    this.projectService.getProjects().subscribe(data => this.allProjects = data);
+    this.projectService.getProjects().subscribe({
+      next: (data) => this.allProjects = data,
+      error: (err) => this.handleServiceError('cargar proyectos', err)
+    });
   }
+
 
   // --- GESTIÓN DE FORMULARIO ---
 
@@ -103,10 +121,9 @@ export class AdminPanelComponent implements OnInit {
       formData.append('image', this.selectedFile);
     }
 
-    // Si es edición, agregamos el truco del _method para Laravel
     if (this.isEditing && this.currentProjectId) {
-      formData.append('_method', 'PUT'); 
-      
+      formData.append('_method', 'PUT');
+
       this.projectService.updateProject(this.currentProjectId, formData).subscribe({
         next: () => {
           alert('¡Proyecto actualizado!');
@@ -129,7 +146,7 @@ export class AdminPanelComponent implements OnInit {
 
   // --- ACCIONES ---
 
-  onEdit(project: any) {
+onEdit(project: any) {
     this.isEditing = true;
     this.currentProjectId = project.id;
     this.projectForm.patchValue({
@@ -151,7 +168,7 @@ export class AdminPanelComponent implements OnInit {
           alert('Eliminado correctamente');
           this.loadProjects();
         },
-        error: (err) => alert('Error al eliminar')
+        error: (err) => this.handleServiceError('eliminar el proyecto', err)
       });
     }
   }
@@ -173,5 +190,18 @@ export class AdminPanelComponent implements OnInit {
   logout() {
     localStorage.removeItem('admin_token');
     this.router.navigate(['/login']);
+  }
+
+  // --- FUNCIÓN DE AYUDA (Colocada al final) ---
+
+  private handleServiceError(action: string, err: any) {
+    console.error(`Error al ${action}:`, err);
+    if (err.status === 401) {
+      alert('Tu sesión ha caducado o es inválida. Ingresa de nuevo.');
+      this.logout();
+    } else {
+      const msg = err.error?.message || 'Revisa la conexión con el servidor.';
+      alert(`Error al ${action}: ${msg}`);
+    }
   }
 }

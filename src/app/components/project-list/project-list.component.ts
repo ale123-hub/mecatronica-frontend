@@ -2,35 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
 
-  allProjects: any[] = []; // Base de datos completa
-  projects: any[] = [];    // Lo que se muestra en pantalla (filtrado)
+  allProjects: any[] = [];
   semesters: any[] = [];
+
+  // Estados de filtro
+  selectedCategory: string = 'Todos';
   selectedSemester: number | null = null;
-  selectedProject: any = null; // Para el Modal
+  searchTerm: string = '';
+
+  selectedProject: any = null;
 
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    // 1. Cargar Proyectos
+    this.loadInitialData();
+  }
+
+  loadInitialData() {
     this.projectService.getProjects().subscribe({
-      next: (data) => {
-        this.allProjects = data;
-        this.projects = data;
-      },
+      next: (data) => this.allProjects = data,
       error: (err) => console.error('Error al cargar proyectos', err)
     });
 
-    // 2. Cargar Semestres para los botones
     this.projectService.getSemesters().subscribe({
       next: (data) => {
         this.semesters = data.sort((a: any, b: any) => a.id - b.id);
@@ -39,47 +43,47 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  // 3. Función para filtrar
-  filterBySemester(semesterId: number | null) {
-    this.selectedSemester = semesterId;
+  // Esta función es la que usa el *ngFor en el HTML
+  getFilteredProjects() {
+    return this.allProjects.filter(p => {
+      // Normalizamos ambos strings para evitar fallos por tildes o mayúsculas
+      const projectCat = this.normalizeText(p.category || 'Mecatrónica');
+      const selectedCat = this.normalizeText(this.selectedCategory);
 
-    if (semesterId === null) {
-      this.projects = this.allProjects;
-    } else {
-      // Usamos == en lugar de === por si el ID viene como string desde el backend
-      this.projects = this.allProjects.filter(p => p.semester_id == semesterId);
-    }
+      // Si es 'Todos', pasa. Si no, comparamos.
+      const categoryMatch = this.selectedCategory === 'Todos' || projectCat === selectedCat;
+
+      const semesterMatch = this.selectedSemester === null || p.semester_id == this.selectedSemester;
+
+      const search = this.searchTerm.toLowerCase().trim();
+      const titleMatch = p.title.toLowerCase().includes(search);
+      const descMatch = p.description ? p.description.toLowerCase().includes(search) : false;
+
+      return categoryMatch && semesterMatch && (titleMatch || descMatch);
+    });
   }
 
-  // --- LÓGICA DEL MODAL ---
+  // Función para limpiar el texto (tildes, espacios y mayúsculas)
+  private normalizeText(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  // Simplificamos los métodos (ya no necesitan llamar a getFilteredProjects manualmente)
+  selectCategory(category: string) { this.selectedCategory = category; }
+  selectSemester(semesterId: number | null) { this.selectedSemester = semesterId; }
+  onSearch(event: any) { this.searchTerm = event.target.value; }
 
   verDetalle(project: any) {
     this.selectedProject = project;
-    // Bloquear scroll para mejor experiencia de usuario
     document.body.style.overflow = 'hidden';
   }
 
   cerrarDetalle() {
     this.selectedProject = null;
-
     document.body.style.overflow = 'auto';
   }
-
-  searchTerm: string = ''; // Variable para guardar lo que el usuario escribe
-
-  searchProjects(event: any) {
-    this.searchTerm = event.target.value.toLowerCase();
-
-    // Filtramos sobre el total de proyectos
-    this.projects = this.allProjects.filter(p => {
-      const titleMatch = p.title.toLowerCase().includes(this.searchTerm);
-      const descMatch = p.description?.toLowerCase().includes(this.searchTerm);
-
-      // Si tienes un semestre seleccionado, respetamos ese filtro también
-      const semesterMatch = this.selectedSemester ? p.semester_id === this.selectedSemester : true;
-
-      return (titleMatch || descMatch) && semesterMatch;
-    });
-  }
-
 }

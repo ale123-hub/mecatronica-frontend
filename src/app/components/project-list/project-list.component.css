@@ -1,13 +1,14 @@
-/* 1. Contenedores Principales */
+/* ==========================================================================
+   1. ESTRUCTURA Y FONDO INSTITUCIONAL (MARCA DE AGUA)
+   ========================================================================== */
 .page-container {
     position: relative;
     min-height: 100vh;
-    /* overflow: hidden;  <-- Si ves que te corta el scroll de la página, comenta esta línea */
+    background-color: #f8f9fa; /* Gris muy claro para que resalte el blanco de las cards */
 }
 
-/* 2. Logo de Fondo Institucional (Watermark) */
 .institucional-bg {
-    position: fixed; /* Cambiado a fixed para que se mantenga centrado aunque hagas scroll */
+    position: fixed; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -17,12 +18,19 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 0.06; /* Muy sutil para que las letras se lean bien */
-    z-index: -1;
+    opacity: 0.05; /* Se mantiene sutil para no interferir con la lectura */
+    z-index: 0;
     pointer-events: none; 
 }
 
-/* 3. Contenedor de los filtros */
+.container {
+    position: relative;
+    z-index: 1; /* Asegura que el contenido esté sobre el logo de fondo */
+}
+
+/* ==========================================================================
+   2. FILTROS Y BOTONES
+   ========================================================================== */
 .filter-container {
     max-width: 950px;
     margin: 0 auto;
@@ -33,44 +41,31 @@
     padding: 20px;
 }
 
-/* 4. Botones de filtro */
-button.btn-pill { /* Cambié btn-sm por una clase más descriptiva si gustas usarla */
-    min-width: 120px;
-    border-radius: 50px;
+/* Estilo unificado para botones de filtro */
+.btn-sm.rounded-pill {
+    min-width: 100px;
     font-weight: 600;
-    border-width: 2px;
     transition: all 0.25s ease-in-out;
-    text-transform: capitalize;
 }
 
-/* Estado: NO seleccionado (Blanco/Azul) */
-button.btn-outline-primary {
-    background-color: white !important;
-    color: #0d6efd !important;
-    border-color: #0d6efd !important;
+/* Estado: SELECCIONADO (Colores UCE) */
+.btn-primary, .btn-dark {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.05);
 }
 
-/* Estado: SELECCIONADO (Azul/Blanco) */
-button.btn-primary {
-    background-color: #0d6efd !important;
-    color: white !important;
-    border-color: #0d6efd !important;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4) !important;
-}
-
-button:hover {
+.btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-button:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* 5. Tarjetas de Proyectos */
+/* ==========================================================================
+   3. TARJETAS DE PROYECTOS (CARDS)
+   ========================================================================== */
 .transition-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 15px !important;
+    border: none !important;
+    background: white;
 }
 
 .transition-card:hover {
@@ -78,16 +73,75 @@ button:focus {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
+.card-img-top {
+    border-radius: 15px 15px 0 0;
+    object-fit: cover;
+}
+
 .text-truncate-2 {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2; 
-    line-clamp: 2;         
+    line-clamp: 2;          
     overflow: hidden;
 }
 
-/* 6. Modales y Efectos */
-.modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+/* ==========================================================================
+   4. MODAL DE DETALLES (REDISEÑADO)
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 90vh;
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+/* Cuerpo del modal con scroll interno */
+.modal-body-scroll {
+    padding: 30px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Estilo para los integrantes (Desarrollado por) */
+.student-item {
+    background: #f1f3f5;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.student-item:hover {
+    background: #e9ecef;
+}
+
+.student-avatar {
+    background-color: #c62828; /* Rojo UCE */
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
 }

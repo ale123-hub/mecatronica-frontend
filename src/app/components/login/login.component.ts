@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router'; // <--- Agregamos RouterModule
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -31,11 +31,10 @@ export class LoginComponent {
       'Content-Type': 'application/json'
     });
 
-    // Usamos la URL con la barra final "/" por si Laravel está redirigiendo
     this.http.post('http://127.0.0.1:8000/api/login', this.credentials, { headers }).subscribe({
       next: (res: any) => {
         console.log('¡Login exitoso!', res);
-        localStorage.setItem('admin_token', res.access_token);
+        localStorage.setItem('token', res.access_token);
         this.router.navigate(['/admin']);
       },
       error: (err) => {

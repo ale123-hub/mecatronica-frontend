@@ -1,3 +1,7 @@
+declare var describe: any;
+declare var it: any;
+declare var beforeEach: any;
+declare var expect: any;
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectListComponent } from './project-list.component';
@@ -20,4 +24,5 @@ describe('ProjectListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });

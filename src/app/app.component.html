@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<div class="d-flex flex-column min-vh-100">
+
+    <div class="flex-grow-1">
+        <router-outlet></router-outlet>
+    </div>
+
+    <footer *ngIf="showFooter()" class="py-4 bg-light border-top mt-5">
+        <div class="container text-center">
+            <small class="text-muted d-block">
+                © 2026 Universidad Central del Ecuador - Facultad de Ingeniería y Ciencias Aplicadas
+            </small>
+            <small class="text-muted d-block">Carrera de Mecatrónica</small>
+
+            <div class="mt-2">
+                <a [routerLink]="['/login']" class="admin-link text-decoration-none text-muted">
+                    <i class="bi bi-lock-fill"></i> Acceso Administrativo
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</div>

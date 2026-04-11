@@ -9,7 +9,7 @@
       <span class="text-secondary me-3 d-none d-md-inline small">
         <i class="bi bi-person-circle me-1"></i> Admin
       </span>
-      <button (click)="logout()" class="btn btn-outline-danger btn-sm rounded-pill px-4 transition-all">
+      <button (click)="onLogout()" class="btn btn-outline-danger btn-sm rounded-pill px-4 transition-all">
         <i class="bi bi-box-arrow-right me-1"></i> Salir
       </button>
     </div>
@@ -20,7 +20,8 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card shadow-lg border-0 overflow-hidden">
-        <div class="card-header py-3 text-center transition-all" [class.bg-primary]="!isEditing" [class.bg-warning]="isEditing">
+        <div class="card-header py-3 text-center transition-all" [class.bg-primary]="!isEditing"
+          [class.bg-warning]="isEditing">
           <h5 class="mb-0 text-white text-uppercase fw-bold letter-spacing-1">
             <i class="bi" [class.bi-plus-circle]="!isEditing" [class.bi-pencil-square]="isEditing"></i>
             {{ isEditing ? 'Editando Proyecto #' + currentProjectId : 'Nuevo Registro' }}
@@ -29,91 +30,148 @@
 
         <div class="card-body p-5 bg-white">
           <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
             <div class="row g-4">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label fw-semibold text-secondary small text-uppercase">Semestre</label>
                 <div class="input-group">
-                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar3"></i></span>
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-mortarboard"></i></span>
                   <select formControlName="semester_id" class="form-select border-start-0 ps-0 shadow-none">
                     <option value="" disabled>Seleccione...</option>
-                    <option *ngFor="let s of semesters" [value]="s.id">{{ s.name }}</option>
+                    <option *ngFor="let sem of semesters" [value]="sem.id">{{sem.name}}</option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label fw-semibold text-secondary small text-uppercase">Turno</label>
                 <div class="input-group">
                   <span class="input-group-text bg-light border-end-0"><i class="bi bi-clock"></i></span>
                   <select formControlName="shift_id" class="form-select border-start-0 ps-0 shadow-none">
                     <option value="" disabled>Seleccione...</option>
-                    <option *ngFor="let t of shifts" [value]="t.id">{{ t.name }}</option>
+                    <option *ngFor="let shift of shifts" [value]="shift.id">{{shift.name}}</option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-12 mt-4">
-                <label class="form-label fw-semibold text-secondary small text-uppercase">Título del Proyecto</label>
-                <input type="text" formControlName="title" class="form-control form-control-lg shadow-none" placeholder="Ej: Celda de Manufactura Flexible">
-              </div>
-
-              <div class="col-12 mt-4">
-                <label class="form-label fw-semibold text-secondary small text-uppercase">Descripción Técnica</label>
-                <textarea formControlName="description" class="form-control shadow-none" rows="4" placeholder="Describe los componentes..."></textarea>
-              </div>
-
-              <div class="col-12 mt-4">
-                <label class="form-label fw-semibold text-secondary small text-uppercase">Imagen del Prototipo</label>
-                <div class="upload-container border-dashed p-4 text-center rounded bg-light">
-                  <input type="file" (change)="onFileSelected($event)" class="form-control d-none" id="fileUpload" accept="image/*">
-                  <label for="fileUpload" class="mb-0 w-100 cursor-pointer">
-                    <i class="bi bi-image text-primary fs-1"></i>
-                    <p class="mb-0 text-muted mt-2">
-                      {{ selectedFile ? selectedFile.name : 'Haz clic para subir una imagen' }}
-                    </p>
-                  </label>
-                </div>
-
-                <div *ngIf="imagePreview" class="mt-4">
-                  <img [src]="imagePreview" class="img-fluid rounded shadow-sm border" style="max-height: 250px; width: 100%; object-fit: cover;">
+              <div class="col-md-4">
+                <label class="form-label fw-semibold text-secondary small text-uppercase">Categoría</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-tag"></i></span>
+                  <select formControlName="category" class="form-select border-start-0 ps-0 shadow-none">
+                    <option value="" disabled>Seleccione...</option>
+                    <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+                  </select>
                 </div>
               </div>
+            </div>
 
-              <div class="col-12 mt-4">
-                <label class="form-label fw-bold text-primary small text-uppercase">Estudiantes Participantes</label>
-                <div class="row g-2 p-3 border rounded bg-light" style="max-height: 200px; overflow-y: auto;">
-                  <div *ngFor="let s of students" class="col-md-4">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" [id]="'student' + s.id" 
-                             [checked]="selectedStudentIds.includes(s.id)" (change)="onStudentChange($event, s.id)">
-                      <label class="form-check-label small" [for]="'student' + s.id">{{ s.name }}</label>
-                    </div>
+            <div class="col-12 mt-4">
+              <label class="form-label fw-semibold text-secondary small text-uppercase">Título del Proyecto</label>
+              <input type="text" formControlName="title" class="form-control form-control-lg shadow-none"
+                placeholder="Ej: Celda de Manufactura Flexible">
+            </div>
+
+            <div class="col-12 mt-4">
+              <label class="form-label fw-semibold text-secondary small text-uppercase">Descripción Técnica</label>
+              <textarea formControlName="description" class="form-control shadow-none" rows="4"
+                placeholder="Describe los componentes..."></textarea>
+            </div>
+
+            <div class="col-12 mt-4">
+              <label class="form-label fw-semibold text-secondary small text-uppercase">Imagen del Prototipo</label>
+              <div class="upload-container border-dashed p-4 text-center rounded bg-light"
+                style="border: 2px dashed #dee2e6;">
+                <input type="file" (change)="onFileSelected($event)" class="form-control d-none" id="fileUpload"
+                  accept="image/*">
+                <label for="fileUpload" class="mb-0 w-100 cursor-pointer">
+                  <i class="bi bi-image text-primary fs-1"></i>
+                  <p class="mb-0 text-muted mt-2">
+                    {{ selectedFile ? selectedFile.name : 'Haz clic para subir una imagen' }}
+                  </p>
+                </label>
+              </div>
+              <div *ngIf="imagePreview" class="mt-4">
+                <img [src]="imagePreview" class="img-fluid rounded shadow-sm border"
+                  style="max-height: 250px; width: 100%; object-fit: cover;">
+              </div>
+            </div>
+
+
+            <div class="col-12 mt-4">
+              <label class="form-label fw-bold text-primary small text-uppercase">Estudiantes Participantes</label>
+              <div class="input-group mb-2 shadow-sm">
+                <input type="text" #newStudentInput class="form-control border-primary-subtle"
+                  placeholder="Escribe nombre (solo letras)..." pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  (keyup.enter)="addMember('student', newStudentInput.value); newStudentInput.value = ''">
+                <button class="btn btn-primary" type="button"
+                  (click)="addMember('student', newStudentInput.value); newStudentInput.value = ''">
+                  <i class="bi bi-plus-lg"></i>
+                </button>
+              </div>
+
+              <div class="row g-2 p-3 border rounded bg-light mx-0" style="max-height: 200px; overflow-y: auto;">
+                <div *ngFor="let s of students" class="col-md-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [id]="'student' + s.id"
+                      [checked]="selectedStudentIds.includes(s.id)" (change)="onStudentChange($event, s.id)">
+                    <label class="form-check-label small" [for]="'student' + s.id">{{ s.name }}</label>
+                  </div>
+                </div>
+                <div *ngFor="let name of newAddedStudents" class="col-md-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" checked (change)="removeNewName('student', name)">
+                    <label class="form-check-label small text-success fw-bold">
+                      <i class="bi bi-person-plus-fill me-1"></i>{{ name }}
+                    </label>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="col-12 mt-4">
-                <label class="form-label fw-semibold text-secondary small text-uppercase">Profesores Responsables</label>
-                <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
-                  <div *ngFor="let t of teachers" class="form-check">
+            <div class="col-12 mt-4">
+              <label class="form-label fw-semibold text-secondary small text-uppercase">Profesores Responsables</label>
+              <div class="input-group mb-2 shadow-sm">
+                <input type="text" #newTeacherInput class="form-control border-secondary-subtle"
+                  placeholder="Escribe nombre (solo letras)..." pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                  (keyup.enter)="addMember('teacher', newTeacherInput.value); newTeacherInput.value = ''">
+                <button class="btn btn-secondary" type="button"
+                  (click)="addMember('teacher', newTeacherInput.value); newTeacherInput.value = ''">
+                  <i class="bi bi-plus-lg"></i>
+                </button>
+              </div>
+
+              <div class="row g-2 p-3 border rounded bg-light mx-0" style="max-height: 200px; overflow-y: auto;">
+                <div *ngFor="let t of teachers" class="col-md-6">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" [id]="'teacher' + t.id"
-                           [checked]="selectedTeacherIds.includes(t.id)" (change)="onTeacherChange($event, t.id)">
-                    <label class="form-check-label" [for]="'teacher' + t.id">{{ t.name }}</label>
+                      [checked]="selectedTeacherIds.includes(t.id)" (change)="onTeacherChange($event, t.id)">
+                    <label class="form-check-label small" [for]="'teacher' + t.id">{{ t.name }}</label>
+                  </div>
+                </div>
+                <div *ngFor="let name of newAddedTeachers" class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" checked (change)="removeNewName('teacher', name)">
+                    <label class="form-check-label small text-info fw-bold">
+                      <i class="bi bi-mortarboard-fill me-1"></i>{{ name }}
+                    </label>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="col-12 mt-5 text-center">
-                <button type="submit" [disabled]="projectForm.invalid" class="btn btn-lg w-100 py-3 fw-bold shadow-sm transition-all" 
-                        [class.btn-primary]="!isEditing" [class.btn-warning]="isEditing">
-                  <i class="bi" [class.bi-send-fill]="!isEditing" [class.bi-check-circle-fill]="isEditing"></i>
-                  {{ isEditing ? ' ACTUALIZAR CAMBIOS' : ' PUBLICAR PROYECTO' }}
-                </button>
+            <div class="col-12 mt-5 text-center">
+              <button type="submit" [disabled]="projectForm.invalid"
+                class="btn btn-lg w-100 py-3 fw-bold shadow-sm transition-all" [class.btn-primary]="!isEditing"
+                [class.btn-warning]="isEditing">
+                <i class="bi" [class.bi-send-fill]="!isEditing" [class.bi-check-circle-fill]="isEditing"></i>
+                {{ isEditing ? ' ACTUALIZAR CAMBIOS' : ' PUBLICAR PROYECTO' }}
+              </button>
 
-                <button *ngIf="isEditing" type="button" (click)="cancelEdit()" class="btn btn-link btn-sm mt-3 text-danger fw-bold text-decoration-none">
-                  <i class="bi bi-x-circle me-1"></i> CANCELAR EDICIÓN
-                </button>
-              </div>
+              <button *ngIf="isEditing" type="button" (click)="resetForm()"
+                class="btn btn-link btn-sm mt-3 text-danger fw-bold text-decoration-none">
+                <i class="bi bi-x-circle me-1"></i> CANCELAR EDICIÓN
+              </button>
             </div>
           </form>
         </div>
@@ -142,8 +200,8 @@
                 <tr *ngFor="let p of allProjects">
                   <td class="fw-bold text-muted">#{{p.id}}</td>
                   <td>
-                    <img [src]="p.image ? 'http://127.0.0.1:8000/storage/' + p.image : 'https://via.placeholder.com/50'" 
-                         class="rounded shadow-sm" style="width: 60px; height: 40px; object-fit: cover;">
+                    <img [src]="p.image ? 'http://127.0.0.1:8000/storage/' + p.image : 'https://via.placeholder.com/50'"
+                      class="rounded shadow-sm" style="width: 60px; height: 40px; object-fit: cover;">
                   </td>
                   <td class="text-start">
                     <div class="fw-bold text-dark">{{p.title}}</div>
@@ -151,8 +209,10 @@
                   </td>
                   <td>
                     <div class="btn-group shadow-sm">
-                      <button (click)="onEdit(p)" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
-                      <button (click)="onDelete(p.id)" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                      <button (click)="onEdit(p)" class="btn btn-sm btn-outline-primary"><i
+                          class="bi bi-pencil-square"></i></button>
+                      <button (click)="onDelete(p.id)" class="btn btn-sm btn-outline-danger"><i
+                          class="bi bi-trash"></i></button>
                     </div>
                   </td>
                 </tr>

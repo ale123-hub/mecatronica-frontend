@@ -1,3 +1,7 @@
+declare var describe: any;
+declare var it: any;
+declare var beforeEach: any;
+declare var expect: any;
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstitucionalComponent } from './institucional.component';

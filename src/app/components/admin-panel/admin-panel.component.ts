@@ -220,7 +220,7 @@ export class AdminPanelComponent implements OnInit {
     this.selectedTeacherIds = project.teachers?.map((t: any) => t.id) || [];
     this.selectedStudentIds = project.students?.map((s: any) => s.id) || [];
 
-    this.imagePreview = project.image ? `http://127.0.0.1:8000/storage/${project.image}` : null;
+    this.imagePreview = project.image ? `https://mecatronica-backend.onrender.com/storage/${project.image}` : null;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

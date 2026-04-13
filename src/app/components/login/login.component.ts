@@ -37,7 +37,7 @@ export class LoginComponent {
       'Content-Type': 'application/json'
     });
 
-    this.http.post('http://127.0.0.1:8000/api/login', this.credentials, { headers }).subscribe({
+    this.http.post('https://mecatronica-backend.onrender.com/api/login', this.credentials, { headers }).subscribe({
       next: (res: any) => {
         console.log('¡Login exitoso!', res);
         localStorage.setItem('token', res.access_token);

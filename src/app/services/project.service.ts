@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://127.0.0.1:8000/api'; // URL base para no repetir
+  private apiUrl = 'https://mecatronica-backend.onrender.com/api'; // URL base para no repetir
 
   constructor(private http: HttpClient) { }
 

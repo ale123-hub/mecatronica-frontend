@@ -83,7 +83,7 @@
                     <span class="badge bg-dark position-absolute m-2 shadow" style="top:0; right:0; z-index: 5;">
                         {{ p.category || 'Mecatrónica' }}
                     </span>
-                    <img [src]="p.image ? 'http://127.0.0.1:8000/storage/' + p.image : 'assets/img/placeholder.png'"
+                    <img [src]="p.image ? 'https://mecatronica-backend.onrender.com/storage/' + p.image : 'assets/img/placeholder.png'"
                         class="card-img-top" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="fw-bold text-dark">{{ p.title }}</h5>
@@ -106,7 +106,7 @@
 
         <div class="row g-0 h-100">
             <div class="col-lg-7 bg-light d-none d-lg-block">
-                <img [src]="selectedProject.image ? 'http://127.0.0.1:8000/storage/' + selectedProject.image : 'assets/img/placeholder.png'"
+                <img [src]="selectedProject.image ? 'https://mecatronica-backend.onrender.com/storage/' + selectedProject.image : 'assets/img/placeholder.png'"
                     class="img-fluid h-100 w-100" style="object-fit: cover;">
             </div>
 

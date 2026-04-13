@@ -133,3 +133,14 @@ input:-webkit-autofill:active {
     color: #0d6efd !important;
     transform: translateX(-3px);
 }
+/* Quitar el borde azul por defecto y mantener el estilo */
+.form-control:focus {
+    box-shadow: none !important;
+    border-color: #dee2e6 !important; /* Mantiene el color gris suave original */
+}
+
+/* Opcional: Si quieres que el borde se pinte de azul suave al escribir */
+.input-group:focus-within .input-group-text,
+.input-group:focus-within .form-control {
+    border-color: #0d6efd !important;
+}

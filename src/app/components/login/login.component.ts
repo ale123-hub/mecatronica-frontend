@@ -7,20 +7,26 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // <--- Lo incluimos aquí
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  credentials = {
-    email: '',
-    password: ''
-  };
+  credentials = { email: '', password: '' };
+  isGreeting: boolean = false;
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) { }
+  
+  startGreeting() {
+    this.isGreeting = true;
+    // El saludo dura 3 segundos y luego se detiene
+    setTimeout(() => {
+      this.isGreeting = false;
+    }, 3000);
+  }
 
   login() {
     console.log('Enviando datos:', this.credentials);

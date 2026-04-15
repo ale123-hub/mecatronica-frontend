@@ -179,10 +179,10 @@ export class AdminPanelComponent implements OnInit {
     formData.append('description', this.projectForm.value.description ?? '');
     formData.append('semester_id', this.projectForm.value.semester_id ?? '');
     formData.append('shift_id', this.projectForm.value.shift_id ?? '');
-    formData.append('category', this.projectForm.value.category ?? ''); // Agregado
+    formData.append('category', this.projectForm.value.category ?? '');
 
-    formData.append('student_ids', JSON.stringify(this.selectedStudentIds));
-    formData.append('teacher_ids', JSON.stringify(this.selectedTeacherIds));
+    this.selectedStudentIds.forEach(id => formData.append('student_ids[]', id.toString()));
+    this.selectedTeacherIds.forEach(id => formData.append('teacher_ids[]', id.toString()));
 
     if (this.selectedFile) {
       formData.append('image', this.selectedFile);

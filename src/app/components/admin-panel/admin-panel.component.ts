@@ -135,6 +135,13 @@ export class AdminPanelComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // NUEVO: Validar tamaño (2MB = 2097152 bytes)
+      if (file.size > 2097152) {
+        alert('⚠️ La imagen es muy pesada. El límite es 2MB para asegurar la subida.');
+        event.target.value = ''; // Limpia el input
+        return;
+      }
+
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () => this.imagePreview = reader.result as string;
@@ -220,7 +227,8 @@ export class AdminPanelComponent implements OnInit {
     this.selectedTeacherIds = project.teachers?.map((t: any) => t.id) || [];
     this.selectedStudentIds = project.students?.map((s: any) => s.id) || [];
 
-    this.imagePreview = project.image ? `https://mecatronica-backend.onrender.com/storage/${project.image}` : null;
+    //this.imagePreview = project.image ? `https://mecatronica-backend.onrender.com/storage/${project.image}` : null;
+    this.imagePreview = project.image ? project.image : null;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

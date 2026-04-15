@@ -200,8 +200,8 @@
                 <tr *ngFor="let p of allProjects">
                   <td class="fw-bold text-muted">#{{p.id}}</td>
                   <td>
-                    <img [src]="p.image ? 'https://mecatronica-backend.onrender.com/storage/' + p.image : 'https://via.placeholder.com/50'"
-                      class="rounded shadow-sm" style="width: 60px; height: 40px; object-fit: cover;">
+                    <img [src]="p.image ? p.image : 'https://via.placeholder.com/50'" class="rounded shadow-sm"
+                      style="width: 60px; height: 40px; object-fit: cover;">
                   </td>
                   <td class="text-start">
                     <div class="fw-bold text-dark">{{p.title}}</div>

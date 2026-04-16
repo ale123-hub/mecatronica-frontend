@@ -79,47 +79,21 @@
             </div>
 
             <div class="col-12 mt-4">
-              <label class="form-label fw-semibold text-secondary small text-uppercase">Imagen Principal del
-                Prototipo</label>
+              <label class="form-label fw-semibold text-secondary small text-uppercase">Imagen del Prototipo</label>
               <div class="upload-container border-dashed p-4 text-center rounded bg-light"
                 style="border: 2px dashed #dee2e6;">
                 <input type="file" (change)="onFileSelected($event)" class="form-control d-none" id="fileUpload"
                   accept="image/*">
-                <label for="fileUpload" class="mb-0 w-100 cursor-pointer" style="cursor: pointer;">
-                  <i class="bi bi-camera-fill text-primary fs-1"></i>
+                <label for="fileUpload" class="mb-0 w-100 cursor-pointer">
+                  <i class="bi bi-image text-primary fs-1"></i>
                   <p class="mb-0 text-muted mt-2">
-                    {{ selectedFile ? selectedFile.name : 'Haz clic para subir la portada del proyecto' }}
+                    {{ selectedFile ? selectedFile.name : 'Haz clic para subir una imagen' }}
                   </p>
                 </label>
               </div>
               <div *ngIf="imagePreview" class="mt-4">
                 <img [src]="imagePreview" class="img-fluid rounded shadow-sm border"
                   style="max-height: 250px; width: 100%; object-fit: cover;">
-              </div>
-            </div>
-
-            <div class="col-12 mt-4">
-              <label class="form-label fw-semibold text-secondary small text-uppercase">Fotos adicionales
-                (Carrusel)</label>
-              <div class="upload-container border-dashed p-4 text-center rounded bg-white"
-                style="border: 2px dashed #c6282833; background-color: #fdfdfd;">
-                <input type="file" (change)="onExtraImagesSelected($event)" class="form-control d-none"
-                  id="extraFileUpload" multiple accept="image/*">
-                <label for="extraFileUpload" class="mb-0 w-100 cursor-pointer" style="cursor: pointer;">
-                  <i class="bi bi-images text-danger fs-1"></i>
-                  <p class="mb-0 text-muted mt-2">
-                    {{ extraFiles.length > 0 ? extraFiles.length + ' fotos seleccionadas' : 'Haz clic para seleccionar
-                    varias fotos de detalle' }}
-                  </p>
-                  <small class="text-primary d-block mt-1" *ngIf="extraFiles.length === 0">Usa Ctrl + Clic para elegir
-                    más de una</small>
-                </label>
-              </div>
-
-              <div *ngIf="extraFiles.length > 0" class="mt-2 d-flex flex-wrap gap-1">
-                <span *ngFor="let file of extraFiles" class="badge bg-secondary-subtle text-secondary border small">
-                  <i class="bi bi-file-earmark-image"></i> {{ file.name | slice:0:15 }}...
-                </span>
               </div>
             </div>
 

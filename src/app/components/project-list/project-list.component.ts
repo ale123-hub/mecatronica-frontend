@@ -20,7 +20,6 @@ export class ProjectListComponent implements OnInit {
   selectedCategory: string = 'Todos';
   selectedSemester: number | null = null;
   searchTerm: string = '';
-
   selectedProject: any = null;
 
   constructor(private projectService: ProjectService) { }
@@ -43,16 +42,12 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  // Esta función es la que usa el *ngFor en el HTML
   getFilteredProjects() {
     return this.allProjects.filter(p => {
-      // Normalizamos ambos strings para evitar fallos por tildes o mayúsculas
       const projectCat = this.normalizeText(p.category || 'Mecatrónica');
       const selectedCat = this.normalizeText(this.selectedCategory);
 
-      // Si es 'Todos', pasa. Si no, comparamos.
       const categoryMatch = this.selectedCategory === 'Todos' || projectCat === selectedCat;
-
       const semesterMatch = this.selectedSemester === null || p.semester_id == this.selectedSemester;
 
       const search = this.searchTerm.toLowerCase().trim();
@@ -63,7 +58,6 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  // Función para limpiar el texto (tildes, espacios y mayúsculas)
   private normalizeText(text: string): string {
     return text
       .toLowerCase()
@@ -72,18 +66,31 @@ export class ProjectListComponent implements OnInit {
       .trim();
   }
 
-  // Simplificamos los métodos (ya no necesitan llamar a getFilteredProjects manualmente)
   selectCategory(category: string) { this.selectedCategory = category; }
   selectSemester(semesterId: number | null) { this.selectedSemester = semesterId; }
   onSearch(event: any) { this.searchTerm = event.target.value; }
 
+  // --- FUNCIÓN ACTUALIZADA PARA EL CARRUSEL ---
   verDetalle(project: any) {
     this.selectedProject = project;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Bloquea el scroll del fondo
+
+    // Esperamos 100ms a que Angular renderice el modal y el ID "projectCarousel" exista
+    setTimeout(() => {
+      const carouselElement = document.getElementById('projectCarousel');
+      if (carouselElement && (window as any).bootstrap) {
+        // Inicializamos el carrusel de Bootstrap manualmente
+        new (window as any).bootstrap.Carousel(carouselElement, {
+          interval: 3000,
+          ride: 'carousel',
+          wrap: true
+        });
+      }
+    }, 150);
   }
 
   cerrarDetalle() {
     this.selectedProject = null;
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = 'auto'; // Devuelve el scroll al fondo
   }
 }

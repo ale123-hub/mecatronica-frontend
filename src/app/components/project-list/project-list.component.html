@@ -4,18 +4,14 @@
     <div class="container py-5 animate__animated animate__fadeIn">
         <div class="text-center mb-5 border-bottom pb-4">
             <div class="d-flex align-items-center justify-content-center mb-4 flex-wrap gap-3">
-                <img src="img/logo-uce.png" alt="Logo UCE" class="shadow-sm rounded-circle p-2 bg-white"
-                    style="max-height: 70px;">
+                <img src="img/logo-uce.png" alt="Logo UCE" class="shadow-sm rounded-circle p-2 bg-white" style="max-height: 70px;">
                 <h1 class="display-5 fw-bold m-0" style="color: #c62828;">Proyectos de Mecatrónica</h1>
-                <img src="img/meca-logo-de.png" alt="Logo Carrera" class="shadow-sm" style="max-height: 70px;">
+                <img src="img/meca-logo-de.png" alt="Logo Carrera" class="shadow-sm uce-logo-carrera">
             </div>
-            <p class="lead text-muted">Facultad de Filosofia, Letras y Ciencias de la Educación - Universidad Central
-                del Ecuador</p>
+            <p class="lead text-muted">Facultad de Filosofia, Letras y Ciencias de la Educación - Universidad Central del Ecuador</p>
         </div>
 
-        <a routerLink="/"
-            class="btn btn-danger rounded-circle shadow-lg position-fixed bottom-0 start-0 m-4 d-flex align-items-center justify-content-center"
-            style="width: 50px; height: 50px; z-index: 1000; background-color: #c62828; border: none;">
+        <a routerLink="/" class="btn btn-danger rounded-circle shadow-lg position-fixed bottom-0 start-0 m-4 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; z-index: 1000; background-color: #c62828; border: none;">
             <i class="bi bi-house-door-fill text-white fs-4"></i>
         </a>
 
@@ -25,8 +21,7 @@
                     <span class="input-group-text bg-white border-0 ps-4">
                         <i class="bi bi-search text-primary"></i>
                     </span>
-                    <input type="text" class="form-control border-0 py-3" placeholder="Buscar proyecto..."
-                        (input)="onSearch($event)">
+                    <input type="text" class="form-control border-0 py-3" placeholder="Buscar proyecto..." (input)="onSearch($event)">
                 </div>
             </div>
         </div>
@@ -35,13 +30,8 @@
             <div class="col-12">
                 <p class="text-muted mb-2 fw-bold small text-uppercase">Filtrar por Área:</p>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
-                    <button (click)="selectCategory('Todos')" class="btn btn-sm rounded-pill px-3 shadow-sm"
-                        [class.btn-dark]="selectedCategory === 'Todos'"
-                        [class.btn-outline-dark]="selectedCategory !== 'Todos'">Todas</button>
-                    <button
-                        *ngFor="let cat of ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Software Industrial']"
-                        (click)="selectCategory(cat)" class="btn btn-sm rounded-pill px-3 shadow-sm"
-                        [class.btn-dark]="selectedCategory === cat" [class.btn-outline-dark]="selectedCategory !== cat">
+                    <button (click)="selectCategory('Todos')" class="btn btn-sm rounded-pill px-3 shadow-sm" [class.btn-dark]="selectedCategory === 'Todos'" [class.btn-outline-dark]="selectedCategory !== 'Todos'">Todas</button>
+                    <button *ngFor="let cat of ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Software Industrial']" (click)="selectCategory(cat)" class="btn btn-sm rounded-pill px-3 shadow-sm" [class.btn-dark]="selectedCategory === cat" [class.btn-outline-dark]="selectedCategory !== cat">
                         {{ cat }}
                     </button>
                 </div>
@@ -52,12 +42,8 @@
             <div class="col-12">
                 <p class="text-muted mb-2 fw-bold small text-uppercase">Filtrar por Semestre:</p>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
-                    <button (click)="selectSemester(null)" class="btn btn-sm rounded-pill px-4 shadow-sm"
-                        [class.btn-primary]="selectedSemester === null"
-                        [class.btn-outline-primary]="selectedSemester !== null">Todos</button>
-                    <button *ngFor="let sem of semesters" (click)="selectSemester(sem.id)"
-                        class="btn btn-sm rounded-pill px-4 shadow-sm" [class.btn-primary]="selectedSemester === sem.id"
-                        [class.btn-outline-primary]="selectedSemester !== sem.id">
+                    <button (click)="selectSemester(null)" class="btn btn-sm rounded-pill px-4 shadow-sm" [class.btn-primary]="selectedSemester === null" [class.btn-outline-primary]="selectedSemester !== null">Todos</button>
+                    <button *ngFor="let sem of semesters" (click)="selectSemester(sem.id)" class="btn btn-sm rounded-pill px-4 shadow-sm" [class.btn-primary]="selectedSemester === sem.id" [class.btn-outline-primary]="selectedSemester !== sem.id">
                         {{ sem.name }}
                     </button>
                 </div>
@@ -71,21 +57,19 @@
             </div>
 
             <div class="col-12 text-center my-5" *ngIf="allProjects.length > 0 && getFilteredProjects().length === 0">
-                <div class="alert alert-light border-primary shadow-sm d-inline-block px-5 py-4">
-                    <h4 class="text-primary mb-2">🚀 No hay resultados</h4>
-                    <button (click)="selectCategory('Todos'); selectSemester(null)"
-                        class="btn btn-primary btn-sm rounded-pill">Ver todos</button>
+                <div class="alert alert-light border-primary shadow-sm d-inline-block px-5 py-4 animate__animated animate__zoomIn">
+                    <h4 class="text-primary mb-3">🚀 No hay resultados</h4>
+                    <p class="text-muted small mb-4">Intenta con otros filtros o términos de búsqueda</p>
+                    <button (click)="selectCategory('Todos'); selectSemester(null)" class="btn btn-primary btn-sm rounded-pill px-4">
+                        Ver todos los proyectos
+                    </button>
                 </div>
             </div>
 
             <div class="col-md-4 mb-4" *ngFor="let p of getFilteredProjects()">
-                <div class="card shadow border-0 h-100 transition-card overflow-hidden position-relative"
-                    (click)="verDetalle(p)" style="cursor: pointer;">
-                    <span class="badge bg-dark position-absolute m-2 shadow" style="top:0; right:0; z-index: 5;">
-                        {{ p.category || 'Mecatrónica' }}
-                    </span>
-                    <img [src]="p.image ? p.image : 'assets/img/placeholder.png'" class="card-img-top"
-                        style="height: 200px; object-fit: cover;">
+                <div class="card shadow border-0 h-100 transition-card overflow-hidden position-relative" (click)="verDetalle(p)" style="cursor: pointer;">
+                    <span class="badge bg-dark position-absolute m-2 shadow" style="top:0; right:0; z-index: 5;">{{ p.category || 'Mecatrónica' }}</span>
+                    <img [src]="p.image ? p.image : 'assets/img/placeholder.png'" class="card-img-top" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="fw-bold text-dark">{{ p.title }}</h5>
                         <p class="text-muted small">{{ p.description | slice:0:100 }}...</p>
@@ -102,23 +86,38 @@
 
 <div class="modal-overlay" *ngIf="selectedProject" (click)="cerrarDetalle()">
     <div class="modal-content animate__animated animate__zoomIn" (click)="$event.stopPropagation()">
-        <button class="btn-close position-absolute top-0 end-0 m-3 shadow-none" style="z-index: 10;"
-            (click)="cerrarDetalle()"></button>
+        <button class="btn-close position-absolute top-0 end-0 m-3 shadow-none" style="z-index: 20;" (click)="cerrarDetalle()"></button>
 
         <div class="row g-0 h-100">
-            <div class="col-lg-7 bg-light d-none d-lg-block">
-                <img [src]="selectedProject.image ? selectedProject.image : 'assets/img/placeholder.png'"
-                    class="img-fluid h-100 w-100" style="object-fit: cover;">
+            <div class="col-lg-7 bg-light d-none d-lg-block overflow-hidden">
+                <div id="projectCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+                    <div class="carousel-inner h-100">
+                        <div class="carousel-item active h-100">
+                            <img [src]="selectedProject.image ? selectedProject.image : 'assets/img/placeholder.png'" class="d-block w-100 h-100" style="object-fit: cover;" alt="Foto principal">
+                        </div>
+                        <ng-container *ngIf="selectedProject.images && selectedProject.images.length > 0">
+                            <div class="carousel-item h-100" *ngFor="let img of selectedProject.images">
+                                <img [src]="img.image_url" class="d-block w-100 h-100" style="object-fit: cover;" alt="Foto adicional">
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <ng-container *ngIf="selectedProject.images && selectedProject.images.length > 0">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </ng-container>
+                </div>
             </div>
 
             <div class="col-lg-5 p-4 p-md-5 bg-white overflow-auto" style="max-height: 90vh;">
                 <div class="d-flex gap-2 mb-3">
-                    <span class="badge bg-primary-subtle text-primary px-3 py-2">{{ selectedProject.semester?.name
-                        }}</span>
-                    <span class="badge bg-dark text-white px-3 py-2">{{ selectedProject.category || 'Mecatrónica'
-                        }}</span>
+                    <span class="badge bg-primary-subtle text-primary px-3 py-2">{{ selectedProject.semester?.name }}</span>
+                    <span class="badge bg-dark text-white px-3 py-2">{{ selectedProject.category || 'Mecatrónica' }}</span>
                 </div>
-
                 <h2 class="fw-bold text-dark mb-1">{{ selectedProject.title }}</h2>
                 <p class="text-muted mb-4 small"><i class="bi bi-clock"></i> Turno {{ selectedProject.shift?.name }}</p>
 
@@ -128,8 +127,7 @@
                 <div class="mb-4" *ngIf="selectedProject.teachers?.length">
                     <h6 class="fw-bold text-dark small text-uppercase mb-3">Docentes Guía</h6>
                     <div class="d-flex flex-wrap gap-2">
-                        <span *ngFor="let t of selectedProject.teachers"
-                            class="badge rounded-pill bg-light text-primary border border-primary-subtle px-3 py-2">
+                        <span *ngFor="let t of selectedProject.teachers" class="badge rounded-pill bg-light text-primary border border-primary-subtle px-3 py-2">
                             {{ t.name }}
                         </span>
                     </div>
@@ -140,8 +138,7 @@
                     <div class="row g-2">
                         <div *ngFor="let s of selectedProject.students" class="col-12">
                             <div class="d-flex align-items-center p-2 border rounded-3 bg-light shadow-sm">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3"
-                                    style="width: 35px; height: 35px; min-width: 35px;">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 35px; height: 35px; min-width: 35px;">
                                     {{ s.name[0] | uppercase }}
                                 </div>
                                 <div>

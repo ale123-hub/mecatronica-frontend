@@ -4,7 +4,7 @@
 .page-container {
     position: relative;
     min-height: 100vh;
-    background-color: #f8f9fa; /* Gris muy claro para que resalte el blanco de las cards */
+    background-color: #f8f9fa;
 }
 
 .institucional-bg {
@@ -18,14 +18,14 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 0.05; /* Se mantiene sutil para no interferir con la lectura */
+    opacity: 0.05;
     z-index: 0;
     pointer-events: none; 
 }
 
 .container {
     position: relative;
-    z-index: 1; /* Asegura que el contenido esté sobre el logo de fondo */
+    z-index: 1;
 }
 
 /* ==========================================================================
@@ -41,14 +41,12 @@
     padding: 20px;
 }
 
-/* Estilo unificado para botones de filtro */
 .btn-sm.rounded-pill {
     min-width: 100px;
     font-weight: 600;
     transition: all 0.25s ease-in-out;
 }
 
-/* Estado: SELECCIONADO (Colores UCE) */
 .btn-primary, .btn-dark {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
     transform: scale(1.05);
@@ -112,14 +110,12 @@
     box-shadow: 0 25px 50px rgba(0,0,0,0.4);
 }
 
-/* Cuerpo del modal con scroll interno */
 .modal-body-scroll {
     padding: 30px;
     overflow-y: auto;
     height: 100%;
 }
 
-/* Estilo para los integrantes (Desarrollado por) */
 .student-item {
     background: #f1f3f5;
     border-radius: 12px;
@@ -134,7 +130,7 @@
 }
 
 .student-avatar {
-    background-color: #c62828; /* Rojo UCE */
+    background-color: #c62828; 
     color: white;
     width: 38px;
     height: 38px;
@@ -144,4 +140,41 @@
     justify-content: center;
     font-weight: bold;
     margin-right: 12px;
+}
+
+/* ==========================================================================
+   5. AJUSTES ESPECÍFICOS PARA LOGO
+   ========================================================================== */
+.uce-logo-carrera {
+    max-height: 70px; 
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important; 
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1)); 
+}
+
+/* ==========================================================================
+   6. ESTADOS VACÍOS (COHETE) - ¡AÑADIDO!
+   ========================================================================== */
+.alert-light.border-primary {
+    background-color: #ffffff;
+    border-width: 2px !important;
+    border-radius: 20px;
+    border-style: dashed !important; /* Estilo industrial/moderno */
+}
+
+.alert-light h4 {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+/* Animación sutil de "vuelo" para el cohete */
+@keyframes rocket-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.alert-light h4::before {
+    content: " "; /* Si quieres añadir decoración extra */
 }

@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class AdminPanelComponent implements OnInit {
 
   // Áreas consistentes con el componente de la lista
-  categories = ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Software Industrial'];
+  categories = ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Audio y Video'];
 
   semesters: any[] = [];
   shifts: any[] = [];

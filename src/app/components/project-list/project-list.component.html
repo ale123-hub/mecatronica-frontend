@@ -39,7 +39,7 @@
                         [class.btn-dark]="selectedCategory === 'Todos'"
                         [class.btn-outline-dark]="selectedCategory !== 'Todos'">Todas</button>
                     <button
-                        *ngFor="let cat of ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Software Industrial']"
+                        *ngFor="let cat of ['Robótica', 'Automatización', 'Electrónica', 'Mecanismos', 'Audio y Video']"
                         (click)="selectCategory(cat)" class="btn btn-sm rounded-pill px-3 shadow-sm"
                         [class.btn-dark]="selectedCategory === cat" [class.btn-outline-dark]="selectedCategory !== cat">
                         {{ cat }}
